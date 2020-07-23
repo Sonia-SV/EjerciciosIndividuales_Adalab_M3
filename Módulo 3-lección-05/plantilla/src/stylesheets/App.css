@@ -1,0 +1,15 @@
+.onion_hater {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.onion_hater_text {
+  height: 100px;
+  width: 200px;
+}
+
+.onion_red {
+  background-color: red;
+}
