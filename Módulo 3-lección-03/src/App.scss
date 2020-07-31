@@ -1,0 +1,24 @@
+.post {
+  background-color: white;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+  &-header {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    padding-left: 10px;
+  }
+  &-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    margin-right: 20px;
+  }
+  &-main {
+    margin: 15px;
+    text-align: justify;
+  }
+  &-extra {
+    display: flex;
+    justify-content: space-between;
+  }
+}
