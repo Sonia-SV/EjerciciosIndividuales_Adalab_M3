@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import Header from './Header';
 import Home from './Home';
 import About from './About';
 import Pricing from './Pricing';
@@ -9,21 +10,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <header>
-          <nav>
-            <ul className="menu">
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/pricing">Pricing</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
+        <Header />
         <main>
           <Switch>
             <Route exact path="/" component={Home} />
