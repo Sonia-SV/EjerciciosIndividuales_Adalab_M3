@@ -1,6 +1,5 @@
 import React from 'react';
-import showList from '../services/showList';
-//import fetchApiShows from '../services/fetchApiShows';
+//import { fetchApiShows } from '../services/fetchApiShows';
 import Header from './Header';
 import ShowList from './ShowList';
 import '../stylesheets/App.scss';
@@ -11,49 +10,35 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showInfo: showList.map((shows) => {
-        return {
-          id: shows.show.id,
-          name: shows.show.name,
-          status: shows.show.status,
-          rating: shows.show.rating.average !== null ? shows.show.rating.average : 'No info',
-          img: shows.show.image !== null ? shows.show.image.medium : placeImg,
-        };
-      }),
+      showList: [],
       isChecked: false,
       filterText: '',
     };
+
     this.searchText = this.searchText.bind(this);
     this.searchChecked = this.searchChecked.bind(this);
+    //this.fetchShows = this.fetchShows.bind(this);
   }
-
-  // filterShows() {
-  //   const shows = showList.map((shows) => {
-  //     return {
-  //       id: shows.show.id,
-  //       name: shows.show.name,
-  //       status: shows.show.status,
-  //       rating: shows.show.rating.average,
-  //       img: shows.show.image !== null ? shows.show.image.medium : placeImg,
-  //     };
-  //   });
-  // }
-
-  // fetchShows() {
-  //   fetchApiShows().then((searchData) => {
-  //     return searchData.map((shows) => {
-  //       return this.setState({
-  //         showInfo: {
-  //           id: shows.show.id,
-  //           name: shows.show.name,
-  //           status: shows.show.status,
-  //           rating: shows.show.rating.average,
-  //           img: shows.show.image !== null ? shows.show.image.medium : placeImg,
-  //         },
-  //       });
-  //     });
-  //   });
-  // }
+  componentDidMount() {
+    fetch('http://api.tvmaze.com/search/shows?q=break')
+      .then((result) => result.json())
+      .then((data) => {
+        data.map((shows) => {
+          const myObj = {
+            id: shows.show.id,
+            name: shows.show.name,
+            status: shows.show.status,
+            rating: shows.show.rating.average !== null ? shows.show.rating.average : 'No info',
+            img: shows.show.image !== null ? shows.show.image.medium : placeImg,
+          };
+          this.setState((prevState) => {
+            return {
+              showList: [...prevState.showList, myObj],
+            };
+          });
+        });
+      });
+  }
 
   searchChecked(ev) {
     this.setState({ isChecked: ev.currentTarget.checked });
@@ -66,7 +51,8 @@ class App extends React.Component {
   }
 
   render() {
-    const filteredShows = this.state.showInfo
+    console.log(this.state.showList);
+    const filteredShows = this.state.showList
       .filter((nameShow) => {
         return nameShow.name.toLowerCase().includes(this.state.filterText.toLowerCase());
       })
